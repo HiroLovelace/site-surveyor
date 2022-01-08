@@ -5,7 +5,7 @@ script written in BASH that uses wget to check the availability status of my per
 If the site status is down the script with generate a persistent desktop alert notification.
 
 -> Dependencies:
+libnotify 
+glib2  
 
-> libnotify
-> glib2
 
