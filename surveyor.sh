@@ -1,12 +1,12 @@
 #!/bin/bash
 #
-# > Synopsis:  
+# > Synopsis: A cron script that will survey + notify the status my website up vs down 
 # > Origin: 01-08-2022
 # > Author Christopher Norman (aloofwolf)
 # > Version 1.0
 
 ## definitions
-
+# <none-yet>
 
 ## variables
 SYS=$HOSTNAME
