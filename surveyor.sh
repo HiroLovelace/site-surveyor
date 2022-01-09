@@ -23,15 +23,14 @@ VERBOSE=off
 #        --dest=org.freedesktop.Notifications \
 #        --object-path=/org/freedesktop/Notifications \
 #        --method=org.freedesktop.Notifications.Notify \
-#        "" 0 "" 'Hello world!' 'This is an example notification.' \
-#        '[]' '{"urgency": <1>}' 5000
+#        "" 0 "" 'Alert!' 'www.aloofwolf.com is down' \
+#        '[]' '{"urgency": <2>}' 0
 #    echo "$C_DATE -- www.aloofwolf.com is down" >> /home/hiro/logs/$PROG.log
 #else
 #    echo "$C_DATE -- UP" >> /home/hiro/logs/$PROG.log
 #fi
 
 wget -q --spider www.aloofwolf.com
-
 if [[ "$?" != "0" ]]; then
      gdbus call --session \
         --dest=org.freedesktop.Notifications \
