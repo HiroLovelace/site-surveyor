@@ -66,9 +66,9 @@ sitetest() {
 }
 
 ## executioner
-if [[ "$SITE_STATUS" == "up" ]]; then
-    sitetest
-fi
+#if [[ "$SITE_STATUS" == "up" ]]; then
+sitetest
+#fi
 exit 0
 
  
