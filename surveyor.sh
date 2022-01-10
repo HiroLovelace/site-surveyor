@@ -63,10 +63,7 @@ site-test() {
 }
 
 if log-check(); then
-    site-test()
-    elif ! 
-
-
+    site-test() 
 }
 
 exit 0
