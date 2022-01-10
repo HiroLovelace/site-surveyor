@@ -11,7 +11,7 @@
 # <none-yet>
 
 ## variables
-SITE_STATUS=$(tail -c 3 "/home/hiro/logs/$PROG.log")
+SITE_STATUS=$(tail -c 3 "/home/hiro/logs/surveyor.sh.log")
 C_DATE=$(date '+%a_%b_%d_%T')
 ERRS=/tmp/surveyor.$$
 PROG=${0##*/}
