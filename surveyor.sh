@@ -51,8 +51,8 @@ VERBOSE=off
 
 ## functions
 sitetest() {
-    if [[ "$SITE_STATUS" == "up"]]; then 
-    wget -q --spider www.aloofwolf.com
+    if [[ "$SITE_STATUS" == "up" ]]; then 
+        wget -q --spider www.aloofwolf.com
     fi
 
     if [[ "$?" == "1" ]]; then
