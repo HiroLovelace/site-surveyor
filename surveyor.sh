@@ -11,7 +11,7 @@
 # <none-yet>
 
 ## variables
-SYS=$HOSTNAME
+SITE_STATUS=$(tail -c 5 '/home/hiro/logs/$PROG.log')
 C_DATE=$(date '+%a_%b_%d_%T')
 ERRS=/tmp/surveyor.$$
 PROG=${0##*/}
@@ -44,11 +44,12 @@ VERBOSE=off
 
 ## functions
 log-check() {
-    if [[ tail -c 5 /home/hiro/logs/$PROG.log == "down" ]]; then
+    if [[ $SITE_STATUS -eq "down" ]]; then
     return 1  
 }
 
 site-test() {
+    wget -q --spider www.aloofwolf.com
     if [[ "$?" != "0" ]]; then
          gdbus call --session \
             --dest=org.freedesktop.Notifications \
