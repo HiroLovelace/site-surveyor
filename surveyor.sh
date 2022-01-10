@@ -3,7 +3,9 @@
 # > Synopsis: A cron script that will survey + notify the status my website up vs down 
 # > Origin: 01-08-2022
 # > Author Christopher Norman (aloofwolf)
-# > Version 1.0
+# > Version 1.0 -- 01-09-2022
+#       -- 01-09-2022 > Current script is able to send an alert message based on up/down status but can't
+#                       stop sending alerts when down status alert is active.
 
 ## definitions
 # <none-yet>
@@ -43,4 +45,10 @@ else
     echo "$C_DATE -- UP" >> /home/hiro/logs/$PROG.log
 fi
 
-exit 0 
+exit 0
+
+# dbus-monitor --session interface='org.freedesktop.Notifications'
+#--> The dbus-monitor command is used to monitor messages going through a D-Bus message bus.
+# this is likely where the solution to the down status alert proliferation issue. 
+
+ 
