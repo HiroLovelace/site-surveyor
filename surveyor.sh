@@ -44,9 +44,10 @@ VERBOSE=off
 
 ## functions
 logcheck() {
-    if [[ $SITE_STATUS -eq "down" ]];
-    return 1
-    }
+    if [[ $SITE_STATUS == "down" ]];
+        return 1
+    fi
+}
 
 sitetest() {
     wget -q --spider www.aloofwolf.com
@@ -67,7 +68,6 @@ sitetest() {
 sitetest()
 if logcheck(); then
     sitetest() 
-}
 
 exit 0
 
