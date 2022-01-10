@@ -43,12 +43,12 @@ VERBOSE=off
 #}
 
 ## functions
-log-check() {
-    if [[ $SITE_STATUS -eq "down" ]]; then
-    return 1  
-}
+logcheck() {
+    if [[ $SITE_STATUS -eq "down" ]];
+    return 1
+    }
 
-site-test() {
+sitetest() {
     wget -q --spider www.aloofwolf.com
     if [[ "$?" != "0" ]]; then
          gdbus call --session \
@@ -64,9 +64,9 @@ site-test() {
 }
 
 ## exec
-site-test()
-if log-check(); then
-    site-test() 
+sitetest()
+if logcheck(); then
+    sitetest() 
 }
 
 exit 0
