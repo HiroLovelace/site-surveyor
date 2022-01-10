@@ -11,7 +11,7 @@
 # <none-yet>
 
 ## variables
-SITE_STATUS=$(tail -c 5 '/home/hiro/logs/$PROG.log')
+SITE_STATUS=$(tail -c 3 '/home/hiro/logs/$PROG.log')
 C_DATE=$(date '+%a_%b_%d_%T')
 ERRS=/tmp/surveyor.$$
 PROG=${0##*/}
@@ -42,13 +42,14 @@ VERBOSE=off
 #fi
 #}
 
-## functions
-logcheck() {
-    if [[ $SITE_STATUS == "down" ]];
-        return 1
-    fi
-}
+#logcheck() {
+#    SITE_STATUS=$(tail -c 3 '/home/hiro/logs/$PROG.log')
+#    if [[ "$SITE_STATUS" == "up" ]];
+#    return 1
+#    fi
+#}
 
+## functions
 sitetest() {
     wget -q --spider www.aloofwolf.com
     if [[ "$?" != "0" ]]; then
@@ -60,15 +61,15 @@ sitetest() {
             '[]' '{"urgency": <2>}' 0
         echo "$C_DATE -- www.aloofwolf.com is down" >> /home/hiro/logs/$PROG.log
     else
-        echo "$C_DATE -- UP" >> /home/hiro/logs/$PROG.log
+        echo "$C_DATE -- up" >> /home/hiro/logs/$PROG.log
     fi
 }
 
-## exec
+## executioner
 sitetest()
-if logcheck(); then
-    sitetest() 
-
+while [[ "$SITE_STATUS" == "up" ]]; do
+    sitetest()
+done 
 exit 0
 
  
