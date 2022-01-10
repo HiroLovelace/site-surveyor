@@ -52,16 +52,16 @@ VERBOSE=off
 ## functions
 sitetest() {
     wget -q --spider www.aloofwolf.com
-    if [[ "$?" != "0" ]]; then
-         gdbus call --session \
-            --dest=org.freedesktop.Notifications \
-            --object-path=/org/freedesktop/Notifications \
-            --method=org.freedesktop.Notifications.Notify \
-            "" 0 "" 'Alert!' 'www.aloofwolf.com is down' \
-            '[]' '{"urgency": <2>}' 0
-        echo "$C_DATE -- www.aloofwolf.com is down" >> /home/hiro/logs/$PROG.log
+    if [[ "$?" == "1" ]]; then
+         echo "$C_DATE -- up" >> /home/hiro/logs/$PROG.log
     else
-        echo "$C_DATE -- up" >> /home/hiro/logs/$PROG.log
+        gdbus call --session \
+                --dest=org.freedesktop.Notifications \
+                --object-path=/org/freedesktop/Notifications \
+                --method=org.freedesktop.Notifications.Notify \
+                "" 0 "" 'Alert!' 'www.aloofwolf.com is down' \
+                '[]' '{"urgency": <2>}' 0
+            echo "$C_DATE -- www.aloofwolf.com is down" >> /home/hiro/logs/$PROG.log
     fi
 }
 
