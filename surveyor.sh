@@ -51,9 +51,13 @@ VERBOSE=off
 
 ## functions
 sitetest() {
+    if [[ "$SITE_STATUS" == "up"]]; then 
     wget -q --spider www.aloofwolf.com
+    fi
+
     if [[ "$?" == "1" ]]; then
          echo "$C_DATE -- up" >> /home/hiro/logs/$PROG.log
+         SITE_STATUS="up"
     else
         gdbus call --session \
                 --dest=org.freedesktop.Notifications \
@@ -62,13 +66,12 @@ sitetest() {
                 "" 0 "" 'Alert!' 'www.aloofwolf.com is down' \
                 '[]' '{"urgency": <2>}' 0
             echo "$C_DATE -- www.aloofwolf.com is down" >> /home/hiro/logs/$PROG.log
+            SITE_STATUS="down"
     fi
 }
 
 ## executioner
-#if [[ "$SITE_STATUS" == "up" ]]; then
 sitetest
-#fi
 exit 0
 
  
