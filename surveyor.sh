@@ -44,7 +44,7 @@ VERBOSE=off
 
 ## functions
 log-check() {
-    if [[ tail -c 3 /home/hiro/logs/$PROG.log == "DOWN" ]]; then
+    if [[ tail -c 5 /home/hiro/logs/$PROG.log == "down" ]]; then
     return 1  
 }
 
@@ -62,6 +62,8 @@ site-test() {
     fi
 }
 
+## exec
+site-test()
 if log-check(); then
     site-test() 
 }
