@@ -66,10 +66,10 @@ sitetest() {
 }
 
 ## executioner
-sitetest()
-while [[ "$SITE_STATUS" == "up" ]]; do
-    sitetest()
-done 
+sitetest
+if [[ "$SITE_STATUS" == "up" ]]; then
+    sitetest
+fi
 exit 0
 
  
