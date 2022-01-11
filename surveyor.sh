@@ -29,9 +29,12 @@ VERBOSE=off
 #       > IF the last two characters are "UP" 
 #           -> [run check site status function]
 
+# look into using Truncate to remove white space and new line at the end of files
 # Create /site-surveyor log directory in logs
 # create /Site-Surveyor/Daily log directory for daily verbose logs status (up and down)
 # Create 2 files for site up status and site down status to be clobbered for each new status
+# Create exec logic to check to see which up or down status file is newer
+#   -> If down is newer then echo down status into files but do not continue alerting 
 
 ## functions
 sitetest() {
