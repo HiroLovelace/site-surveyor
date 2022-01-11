@@ -11,7 +11,7 @@
 # <none-yet>
 
 ## variables
-SITE_STATUS=$(tail -c 3 "/home/hiro/logs/surveyor.sh.log")
+SITE_STATUS="up"
 C_DATE=$(date '+%a_%b_%d_%T')
 ERRS=/tmp/surveyor.$$
 PROG=${0##*/}
@@ -22,12 +22,41 @@ VERBOSE=off
 #--> The dbus-monitor command is used to monitor messages going through a D-Bus message bus.
 # this is likely where the solution to the down status alert proliferation issue. 
 
-# plan
-#   sed
+## plan
+
+#   sed (don't use sed nor awk)
 #       > Read the last two characters of the last line from /home/hiro/logs/$PROG.log
 #       > IF the last two characters are "UP" 
 #           -> [run check site status function]
-#
+
+# Create /site-surveyor log directory in logs
+# create /Site-Surveyor/Daily log directory for daily verbose logs status (up and down)
+# Create 2 files for site up status and site down status to be clobbered for each new status
+
+## functions
+sitetest() {
+    if [[ "$SITE_STATUS" -eq "up" ]]; then 
+        wget -q --spider www.aloofwolf.com
+            if [[ "$?" -eq "1" ]]; then
+                $SITE_STATUS="up"
+                echo "$C_DATE -- up" >> /home/hiro/logs/$PROG.log
+                
+            else
+                $SITE_STATUS="down"
+                echo "$C_DATE -- www.aloofwolf.com is down" >> /home/hiro/logs/$PROG.log
+            fi
+    fi
+}
+
+sitedown-alert() {
+    gdbus call --session \
+                        --dest=org.freedesktop.Notifications \
+                        --object-path=/org/freedesktop/Notifications \
+                        --method=org.freedesktop.Notifications.Notify \
+                        "" 0 "" 'Alert!' 'www.aloofwolf.com is down' \
+                        '[]' '{"urgency": <2>}' 0
+}
+
 #site-test-variation() {
 #if ! wget -q --spider www.aloofwolf.com; then
 #    gdbus call --session \
@@ -42,30 +71,7 @@ VERBOSE=off
 #fi
 #}
 
-#logcheck() {
-#    SITE_STATUS=$(tail -c 3 '/home/hiro/logs/$PROG.log')
-#    if [[ "$SITE_STATUS" == "up" ]];
-#    return 1
-#    fi
-#}
 
-## functions
-sitetest() {
-    if [[ "$SITE_STATUS" == "up" ]]; then 
-        wget -q --spider www.aloofwolf.com
-        if [[ "$?" == "1" ]]; then
-            echo "$C_DATE -- up" >> /home/hiro/logs/$PROG.log
-        else
-            gdbus call --session \
-                    --dest=org.freedesktop.Notifications \
-                    --object-path=/org/freedesktop/Notifications \
-                    --method=org.freedesktop.Notifications.Notify \
-                    "" 0 "" 'Alert!' 'www.aloofwolf.com is down' \
-                    '[]' '{"urgency": <2>}' 0
-                echo "$C_DATE -- www.aloofwolf.com is down" >> /home/hiro/logs/$PROG.log
-        fi
-    fi
-}
 
 ## executioner
 sitetest
